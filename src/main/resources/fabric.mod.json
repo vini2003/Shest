@@ -1,0 +1,35 @@
+{
+	"schemaVersion": 1,
+	"id": "shest",
+	"version": "${version}",
+	"name": "Shest",
+	"description": "It's basically a normal chest, but more prone to incompatibilities.",
+	"authors": [
+		"vini2003"
+	],
+	"contact": {
+		"homepage": "https://fabricmc.net/",
+		"sources": "https://github.com/vini2003/Shest"
+	},
+	"license": "GPLv3",
+	"icon": "assets/shest/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"shest.Shest"
+		],
+		"client": [
+			"shest.ShestClient"
+		]
+	},
+	"mixins": [
+	],
+	"depends": {
+		"fabricloader": ">=0.7.0",
+		"fabric": "*",
+		"minecraft": "1.15.x"
+	},
+	"suggests": {
+		"flamingo": "*"
+	}
+}
