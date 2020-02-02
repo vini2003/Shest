@@ -1,0 +1,17 @@
+{
+	"type": "crafting_shaped",
+	"pattern": [
+		"111",
+		"1 1",
+		"111"
+	],
+	"key": {
+		"1": {
+			"item": "minecraft:dirt"
+		}
+	},
+	"result": {
+		"item": "shest:dirt_shest",
+		"count": 1
+	}
+}

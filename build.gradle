@@ -16,6 +16,10 @@ minecraft {
 repositories {
 	mavenLocal()
 	maven {
+		name = "Cotton"
+		url "http://server.bbkr.space:8081/artifactory/libs-release"
+	}
+	maven {
 		name = "GitHub"
 		url "https://jitpack.io"
 	}

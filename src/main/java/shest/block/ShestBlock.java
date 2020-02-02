@@ -14,17 +14,14 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.BlockView;
+import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import shest.entity.ShestBlockEntity;
 import shest.registry.ContainerRegistry;
 
 public class ShestBlock extends Block implements BlockEntityProvider {
-	ShestBlockEntity shestBlockEntity;
+	public ShestBlockEntity shestBlockEntity;
 	public int tier = 0;
-
-	public ShestBlock(Settings settings) {
-		this(settings, 0);
-	}
 
 	public ShestBlock(Settings settings, int tier) {
 		super(settings);
@@ -46,20 +43,33 @@ public class ShestBlock extends Block implements BlockEntityProvider {
 		return ActionResult.SUCCESS;
 	}
 
+
 	@Override
-	public void onBreak(World world, BlockPos pos, BlockState state, PlayerEntity player) {
-		if (!world.isClient() && !player.isCreative()) {
-			for (int i = 0; i <  shestBlockEntity.getInvSize(); ++i) {
-				player.dropItem(shestBlockEntity.getInvStack(i).copy(), false);
+	public void afterBreak(World world, PlayerEntity player, BlockPos pos, BlockState state, BlockEntity blockEntity, ItemStack stack) {
+		if (!player.isCreative()) {
+			for (int i = 0; i <  ((ShestBlockEntity) blockEntity).getInvSize(); ++i) {
+				ItemStack stackB = ((ShestBlockEntity) blockEntity).getInvStack(i).copy();
+
+				do {
+					int intA = Math.min(stackB.getCount(), stackB.getMaxCount());
+
+					ItemStack stackC = stackB.copy();
+					stackC.setCount(intA);
+					stackB.decrement(intA);
+					Block.dropStack(world, pos, stackC.copy());
+				} while (!stackB.isEmpty());
 			}
+
+			Block.dropStack(world, pos, new ItemStack(this.asItem()));
 		}
 
-		super.onBreak(world, pos, state, player);
 	}
 
 	public static class Manager {
 		public static int getWidth(int tier) {
 			switch (tier) {
+				case -1:
+					return 1;
 				case 3:
 					return 12;
 				case 4:
@@ -71,6 +81,8 @@ public class ShestBlock extends Block implements BlockEntityProvider {
 
 		public static int getHeight(int tier) {
 			switch (tier) {
+				case -1:
+					return 1;
 				case 0:
 					return 3;
 				case 1:

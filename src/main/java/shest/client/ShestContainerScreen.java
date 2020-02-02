@@ -18,7 +18,7 @@ public class ShestContainerScreen extends BaseContainerScreen<ShestContainer> {
 	public ShestContainerScreen(Text name, ShestContainer linkedContainer, PlayerEntity player, int x, int y, int m) {
 		super(name, linkedContainer, player);
 
-		WInterface mainInterface = new WInterface(WPosition.of(WType.FREE, 0, 0, 0), WSize.of(x * 18 + 8, y * 18 + 108), linkedContainer);
+		WInterface mainInterface = new WInterface(WPosition.of(WType.FREE, 0, 0, 0), x < 9 ? WSize.of(9 * 18 + 8, y + 18 + 108) : WSize.of(x * 18 + 8, y * 18 + 108), linkedContainer);
 
 		mainInterface.setLabel(name);
 
@@ -26,11 +26,19 @@ public class ShestContainerScreen extends BaseContainerScreen<ShestContainer> {
 
 		getHolder().add(mainInterface);
 
-		WSlot.addArray(WPosition.of(WType.ANCHORED, 4, 19, 0, mainInterface), WSize.of(18, 18), mainInterface, 0, ShestContainer.SHEST_INVENTORY, x, y);
+		if (x >= 9) {
+			WSlot.addArray(WPosition.of(WType.ANCHORED, 4, 19, 0, mainInterface), WSize.of(18, 18), mainInterface, 0, ShestContainer.SHEST_INVENTORY, x, y);
 
-		WSlot.addArray(WPosition.of(WType.ANCHORED, ((x * 9 + 4) - (9 * 9)), y * 18 + 24 + 4 + 54, 0, mainInterface), WSize.of(18, 18), mainInterface, 0, ShestContainer.PLAYER_INVENTORY, 9, 1);
+			WSlot.addArray(WPosition.of(WType.ANCHORED, ((x * 9 + 4) - (9 * 9)), y * 18 + 24 + 4 + 54, 0, mainInterface), WSize.of(18, 18), mainInterface, 0, ShestContainer.PLAYER_INVENTORY, 9, 1);
 
-		WSlot.addArray(WPosition.of(WType.ANCHORED, ((x * 9 + 4) - (9 * 9)), y * 18 + 24, 0, mainInterface), WSize.of(18, 18), mainInterface, 9, ShestContainer.PLAYER_INVENTORY, 9, 3);
+			WSlot.addArray(WPosition.of(WType.ANCHORED, ((x * 9 + 4) - (9 * 9)), y * 18 + 24, 0, mainInterface), WSize.of(18, 18), mainInterface, 9, ShestContainer.PLAYER_INVENTORY, 9, 3);
+		} else {
+			WSlot.addSingle(WPosition.of(WType.ANCHORED, mainInterface.getWidth() / 2 - 9, 19, 0, mainInterface), WSize.of(18, 18), mainInterface, 0, ShestContainer.SHEST_INVENTORY);
+
+			WSlot.addArray(WPosition.of(WType.ANCHORED, 4, y * 18 + 24 + 4 + 54, 0, mainInterface), WSize.of(18, 18), mainInterface, 0, ShestContainer.PLAYER_INVENTORY, 9, 1);
+
+			WSlot.addArray(WPosition.of(WType.ANCHORED, 4, y * 18 + 24, 0, mainInterface), WSize.of(18, 18), mainInterface, 9, ShestContainer.PLAYER_INVENTORY, 9, 3);
+		}
 
 		for (WWidget widget : mainInterface.getWidgets()) {
 			if (widget instanceof WSlot && ((WSlot) widget).getInventoryNumber() == ShestContainer.SHEST_INVENTORY) {
