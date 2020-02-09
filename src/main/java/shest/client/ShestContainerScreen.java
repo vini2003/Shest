@@ -1,46 +1,39 @@
 package shest.client;
 
+
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
-import net.minecraft.util.math.BlockPos;
 import shest.common.ShestContainer;
-import spinnery.common.BaseContainer;
 import spinnery.common.BaseContainerScreen;
+import spinnery.widget.WAbstractWidget;
 import spinnery.widget.WInterface;
-import spinnery.widget.WPosition;
-import spinnery.widget.WSize;
+import spinnery.widget.WPanel;
 import spinnery.widget.WSlot;
-import spinnery.widget.WType;
-import spinnery.widget.WWidget;
+import spinnery.widget.api.Position;
+import spinnery.widget.api.Size;
 
 public class ShestContainerScreen extends BaseContainerScreen<ShestContainer> {
 	public ShestContainerScreen(Text name, ShestContainer linkedContainer, PlayerEntity player, int x, int y, int m) {
 		super(name, linkedContainer, player);
 
-		WInterface mainInterface = new WInterface(WPosition.of(WType.FREE, 0, 0, 0), x < 9 ? WSize.of(9 * 18 + 8, y + 18 + 108) : WSize.of(x * 18 + 8, y * 18 + 108), linkedContainer);
+		WInterface mainInterface = getInterface();
 
-		mainInterface.setLabel(name);
+		WPanel mainPanel = mainInterface.getFactory().build(WPanel.class, Position.of(mainInterface), x < 9 ? Size.of(9 * 18 + 8, y + 18 + 108) : Size.of(x * 18 + 8, y * 18 + 108)).setParent(mainInterface);
 
-		mainInterface.center();
+		mainPanel.setLabel(name);
 
-		getHolder().add(mainInterface);
+		mainPanel.center();
+
+		mainInterface.add(mainPanel);
+		WSlot.addPlayerInventory(Position.of(mainPanel, ((mainPanel.getWidth()) / 2) - (int) (18 * 4.5f), y * 18 + 24, 0), Size.of(18, 18), mainInterface);
 
 		if (x >= 9) {
-			WSlot.addArray(WPosition.of(WType.ANCHORED, 4, 19, 0, mainInterface), WSize.of(18, 18), mainInterface, 0, ShestContainer.SHEST_INVENTORY, x, y);
-
-			WSlot.addArray(WPosition.of(WType.ANCHORED, ((x * 9 + 4) - (9 * 9)), y * 18 + 24 + 4 + 54, 0, mainInterface), WSize.of(18, 18), mainInterface, 0, ShestContainer.PLAYER_INVENTORY, 9, 1);
-
-			WSlot.addArray(WPosition.of(WType.ANCHORED, ((x * 9 + 4) - (9 * 9)), y * 18 + 24, 0, mainInterface), WSize.of(18, 18), mainInterface, 9, ShestContainer.PLAYER_INVENTORY, 9, 3);
+			WSlot.addArray(Position.of(mainPanel, 4, 19, 0), Size.of(18, 18), mainInterface, 0, ShestContainer.SHEST_INVENTORY, x, y);
 		} else {
-			WSlot.addSingle(WPosition.of(WType.ANCHORED, mainInterface.getWidth() / 2 - 9, 19, 0, mainInterface), WSize.of(18, 18), mainInterface, 0, ShestContainer.SHEST_INVENTORY);
-
-			WSlot.addArray(WPosition.of(WType.ANCHORED, 4, y * 18 + 24 + 4 + 54, 0, mainInterface), WSize.of(18, 18), mainInterface, 0, ShestContainer.PLAYER_INVENTORY, 9, 1);
-
-			WSlot.addArray(WPosition.of(WType.ANCHORED, 4, y * 18 + 24, 0, mainInterface), WSize.of(18, 18), mainInterface, 9, ShestContainer.PLAYER_INVENTORY, 9, 3);
+			mainInterface.add(mainInterface.getFactory().build(WSlot.class, Position.of(mainPanel, mainPanel.getWidth() / 2 - 9, 19, 0), Size.of(18, 18)).setSlotNumber(0).setInventoryNumber(ShestContainer.SHEST_INVENTORY));
 		}
 
-		for (WWidget widget : mainInterface.getWidgets()) {
+		for (WAbstractWidget widget : mainInterface.getWidgets()) {
 			if (widget instanceof WSlot && ((WSlot) widget).getInventoryNumber() == ShestContainer.SHEST_INVENTORY) {
 				((WSlot) widget).setOverrideMaximumCount(true);
 				((WSlot) widget).setMaximumCount(m);

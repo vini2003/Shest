@@ -9,9 +9,9 @@ import net.minecraft.util.math.BlockPos;
 import shest.entity.ShestBlockEntity;
 import spinnery.common.BaseContainer;
 import spinnery.common.BaseInventory;
+import spinnery.widget.WAbstractWidget;
 import spinnery.widget.WInterface;
 import spinnery.widget.WSlot;
-import spinnery.widget.WWidget;
 
 public class ShestContainer extends BaseContainer {
 	public static final int SHEST_INVENTORY = 1;
@@ -21,21 +21,18 @@ public class ShestContainer extends BaseContainer {
 	public ShestContainer(int synchronizationID, PlayerInventory playerInventory, BlockPos shestPos, int x, int y, int m) {
 		super(synchronizationID, playerInventory);
 
-		shestBlockEntity = ((ShestBlockEntity) getLinkedWorld().getBlockEntity(shestPos));
+		shestBlockEntity = ((ShestBlockEntity) getWorld().getBlockEntity(shestPos));
 
-		WInterface mainInterface = new WInterface(this);
-
-		getHolder().add(mainInterface);
+		WInterface mainInterface = getInterface();
 
 		getInventories().put(SHEST_INVENTORY, shestBlockEntity);
 
 		shestBlockEntity.addListener(this::onContentChanged);
 
-		WSlot.addPlayerInventory(mainInterface, PLAYER_INVENTORY);
+		WSlot.addHeadlessArray(mainInterface, 0, SHEST_INVENTORY, x, y);
+		WSlot.addHeadlessPlayerInventory(mainInterface);
 
-		WSlot.addArray(mainInterface, 0, SHEST_INVENTORY, x, y);
-
-		for (WWidget widget : mainInterface.getWidgets()) {
+		for (WAbstractWidget widget : mainInterface.getWidgets()) {
 			if (widget instanceof WSlot && ((WSlot) widget).getInventoryNumber() == SHEST_INVENTORY) {
 				((WSlot) widget).setOverrideMaximumCount(true);
 				((WSlot) widget).setMaximumCount(m);

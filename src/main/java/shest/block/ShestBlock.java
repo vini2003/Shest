@@ -46,19 +46,19 @@ public class ShestBlock extends Block implements BlockEntityProvider {
 
 	@Override
 	public void afterBreak(World world, PlayerEntity player, BlockPos pos, BlockState state, BlockEntity blockEntity, ItemStack stack) {
-		if (!player.isCreative()) {
-			for (int i = 0; i <  ((ShestBlockEntity) blockEntity).getInvSize(); ++i) {
-				ItemStack stackB = ((ShestBlockEntity) blockEntity).getInvStack(i).copy();
+		for (int i = 0; i <  ((ShestBlockEntity) blockEntity).getInvSize(); ++i) {
+			ItemStack stackB = ((ShestBlockEntity) blockEntity).getInvStack(i).copy();
 
-				do {
-					int intA = Math.min(stackB.getCount(), stackB.getMaxCount());
+			do {
+				int intA = Math.min(stackB.getCount(), stackB.getMaxCount());
 
-					ItemStack stackC = stackB.copy();
-					stackC.setCount(intA);
-					stackB.decrement(intA);
-					Block.dropStack(world, pos, stackC.copy());
-				} while (!stackB.isEmpty());
-			}
+				ItemStack stackC = stackB.copy();
+
+				stackC.setCount(intA);
+				stackB.decrement(intA);
+
+				Block.dropStack(world, pos, stackC.copy());
+			} while (!stackB.isEmpty());
 
 			Block.dropStack(world, pos, new ItemStack(this.asItem()));
 		}
@@ -70,12 +70,18 @@ public class ShestBlock extends Block implements BlockEntityProvider {
 			switch (tier) {
 				case -1:
 					return 1;
-				case 3:
-					return 12;
-				case 4:
-					return 15;
-				default:
+				case 0:
 					return 9;
+				case 1:
+					return 9;
+				case 2:
+					return 12;
+				case 3:
+					return 15;
+				case 4:
+					return 18;
+				default:
+					return 0;
 			}
 		}
 
@@ -87,8 +93,14 @@ public class ShestBlock extends Block implements BlockEntityProvider {
 					return 3;
 				case 1:
 					return 6;
+				case 2:
+					return 6;
+				case 3:
+					return 6;
+				case 4:
+					return 6;
 				default:
-					return 9;
+					return 0;
 			}
 		}
 
