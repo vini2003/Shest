@@ -12,9 +12,10 @@ import spinnery.widget.WSlot;
 import spinnery.widget.api.Position;
 import spinnery.widget.api.Size;
 
+import static shest.common.ShestContainer.SHEST_INVENTORY;
+
 public class ShestContainerScreen extends BaseContainerScreen<ShestContainer> {
 	public ShestContainerScreen(ShestContainer container) {
-		// Text name, ShestContainer linkedContainer, PlayerEntity player, int x, int y, int m
 		super(container.name, container, container.player);
 
 		int x = container.x;
@@ -36,15 +37,17 @@ public class ShestContainerScreen extends BaseContainerScreen<ShestContainer> {
 		WSlot.addPlayerInventory(Position.of(mainPanel, ((mainPanel.getWidth()) / 2) - (int) (18 * 4.5f), y * 18 + 24, 1), Size.of(18, 18), mainInterface);
 
 		if (x >= 9) {
-			WSlot.addArray(Position.of(mainPanel, 4, 19, 1), Size.of(18, 18), mainInterface, 0, ShestContainer.SHEST_INVENTORY, x, y);
+			WSlot.addArray(Position.of(mainPanel, 4, 19, 1), Size.of(18, 18), mainInterface, 0, SHEST_INVENTORY, x, y);
 		} else {
-			mainInterface.add(mainInterface.createChild(WSlot.class, Position.of(mainPanel, mainPanel.getWidth() / 2 - 9, 19, 1), Size.of(18, 18)).setSlotNumber(0).setInventoryNumber(ShestContainer.SHEST_INVENTORY));
+			mainInterface.add(mainInterface.createChild(WSlot.class, Position.of(mainPanel, mainPanel.getWidth() / 2 - 9, 19, 1), Size.of(18, 18)).setSlotNumber(0).setInventoryNumber(SHEST_INVENTORY));
 		}
 
 		for (WAbstractWidget widget : mainInterface.getWidgets()) {
-			if (widget instanceof WSlot && ((WSlot) widget).getInventoryNumber() == ShestContainer.SHEST_INVENTORY) {
-				((WSlot) widget).setOverrideMaximumCount(true);
-				((WSlot) widget).setMaximumCount(m);
+			if (!(widget instanceof WSlot)) continue;
+			WSlot slot = (WSlot) widget;
+			if (slot.getInventoryNumber() == SHEST_INVENTORY) {
+				slot.setOverrideMaximumCount(true);
+				slot.setMaximumCount(m);
 			}
 		}
 	}
