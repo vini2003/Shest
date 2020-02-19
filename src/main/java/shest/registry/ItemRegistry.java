@@ -6,6 +6,8 @@ import net.minecraft.util.registry.Registry;
 import shest.Shest;
 
 public class ItemRegistry {
+	public static final Item.Settings SHEST_ITEM_SETTINGS = new Item.Settings().group(ItemGroupRegistry.SHEST_GROUP);
+
 	public ItemRegistry() {
 		// NO-OP
 	}

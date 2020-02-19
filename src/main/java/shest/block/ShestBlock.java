@@ -4,27 +4,32 @@ import net.fabricmc.fabric.api.container.ContainerProviderRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockEntityProvider;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.ChestBlock;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.inventory.Inventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.ActionResult;
+import net.minecraft.util.DefaultedList;
 import net.minecraft.util.Hand;
+import net.minecraft.util.ItemScatterer;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import shest.entity.ShestBlockEntity;
+import shest.registry.BlockRegistry;
 import shest.registry.ContainerRegistry;
 
 public class ShestBlock extends Block implements BlockEntityProvider {
 	public ShestBlockEntity shestBlockEntity;
-	public int tier = 0;
+	public int tier;
 
-	public ShestBlock(Settings settings, int tier) {
-		super(settings);
+	public ShestBlock(int tier) {
+		super(BlockRegistry.SHEST_BLOCK_SETTINGS);
 		this.tier = tier;
 	}
 
@@ -38,31 +43,39 @@ public class ShestBlock extends Block implements BlockEntityProvider {
 	@Override
 	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
 		if (!world.isClient) {
-			ContainerProviderRegistry.INSTANCE.openContainer(ContainerRegistry.SHEST_BLOCK_CONTAINER, player, (buffer) -> { buffer.writeBlockPos(pos); buffer.writeInt(Manager.getWidth(tier)); buffer.writeInt(Manager.getHeight(tier)); buffer.writeInt(Manager.getMaximum(tier)); buffer.writeText(new TranslatableText(this.getTranslationKey())); });
+			ContainerProviderRegistry.INSTANCE.openContainer(ContainerRegistry.SHEST_BLOCK_CONTAINER, player, (buffer) -> {
+				buffer.writeText(new TranslatableText(this.getTranslationKey()));
+				buffer.writeBlockPos(pos);
+				buffer.writeInt(Manager.getWidth(tier));
+				buffer.writeInt(Manager.getHeight(tier));
+				buffer.writeInt(Manager.getMaximum(tier));
+			});
 		}
 		return ActionResult.SUCCESS;
 	}
 
-
 	@Override
-	public void afterBreak(World world, PlayerEntity player, BlockPos pos, BlockState state, BlockEntity blockEntity, ItemStack stack) {
-		for (int i = 0; i <  ((ShestBlockEntity) blockEntity).getInvSize(); ++i) {
-			ItemStack stackB = ((ShestBlockEntity) blockEntity).getInvStack(i).copy();
+	public void onBlockRemoved(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
+		if (state.getBlock() != newState.getBlock()) {
+			ShestBlockEntity blockEntity = (ShestBlockEntity) world.getBlockEntity(pos);
 
-			do {
-				int intA = Math.min(stackB.getCount(), stackB.getMaxCount());
+			for (int i = 0; i < blockEntity.getInvSize(); ++i) {
+				ItemStack stackB = blockEntity.getInvStack(i).copy();
 
-				ItemStack stackC = stackB.copy();
+				do {
+					int intA = Math.min(stackB.getCount(), stackB.getMaxCount());
 
-				stackC.setCount(intA);
-				stackB.decrement(intA);
+					ItemStack stackC = stackB.copy();
 
-				Block.dropStack(world, pos, stackC.copy());
-			} while (!stackB.isEmpty());
+					stackC.setCount(intA);
+					stackB.decrement(intA);
 
-			Block.dropStack(world, pos, new ItemStack(this.asItem()));
+					ItemScatterer.spawn(world, pos, DefaultedList.copyOf(ItemStack.EMPTY, stackC.copy()));
+				} while (!stackB.isEmpty());
+			}
+
+			super.onBlockRemoved(state, world, pos, newState, moved);
 		}
-
 	}
 
 	public static class Manager {
@@ -80,6 +93,8 @@ public class ShestBlock extends Block implements BlockEntityProvider {
 					return 15;
 				case 4:
 					return 18;
+				case 5:
+					return 21;
 				default:
 					return 0;
 			}
@@ -98,6 +113,8 @@ public class ShestBlock extends Block implements BlockEntityProvider {
 				case 3:
 					return 6;
 				case 4:
+					return 6;
+				case 5:
 					return 6;
 				default:
 					return 0;

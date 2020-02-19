@@ -10,6 +10,6 @@ public class ItemGroupRegistry {
 	public static ItemGroup SHEST_GROUP;
 
 	public static void initialize() {
-		SHEST_GROUP = FabricItemGroupBuilder.build(new Identifier(Shest.MOD_ID, "shest"), () -> new ItemStack(BlockRegistry.WOOD_SHEST_BLOCK));
+		SHEST_GROUP = FabricItemGroupBuilder.build(new Identifier(Shest.MOD_ID, "shest"), () -> new ItemStack(BlockRegistry.EMERALD_SHEST_BLOCK));
 	}
 }

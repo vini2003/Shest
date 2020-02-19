@@ -7,26 +7,24 @@ import net.minecraft.block.Material;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroup;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import shest.Shest;
 import shest.block.ShestBlock;
-import shest.block.ShestBlockDiamond;
-import shest.block.ShestBlockDirt;
-import shest.block.ShestBlockEmerald;
-import shest.block.ShestBlockGold;
-import shest.block.ShestBlockIron;
-import shest.block.ShestBlockWood;
+
+import static shest.registry.ItemRegistry.SHEST_ITEM_SETTINGS;
 
 public class BlockRegistry {
-	public static final Block DIRT_SHEST_BLOCK = register("dirt_shest", new ShestBlockDirt(FabricBlockSettings.of(Material.METAL).sounds(BlockSoundGroup.METAL).strength(1.5F, 3.5F).build()), new Item.Settings().group(ItemGroupRegistry.SHEST_GROUP));
-	public static final Block WOOD_SHEST_BLOCK = register("wood_shest", new ShestBlockWood(FabricBlockSettings.of(Material.METAL).sounds(BlockSoundGroup.METAL).strength(1.5F, 3.5F).build()), new Item.Settings().group(ItemGroupRegistry.SHEST_GROUP));
-	public static final Block IRON_SHEST_BLOCK = register("iron_shest", new ShestBlockIron(FabricBlockSettings.of(Material.METAL).sounds(BlockSoundGroup.METAL).strength(1.5F, 3.5F).build()), new Item.Settings().group(ItemGroupRegistry.SHEST_GROUP));
-	public static final Block GOLD_SHEST_BLOCK = register("gold_shest", new ShestBlockGold(FabricBlockSettings.of(Material.METAL).sounds(BlockSoundGroup.METAL).strength(1.5F, 3.5F).build()), new Item.Settings().group(ItemGroupRegistry.SHEST_GROUP));
-	public static final Block DIAMOND_SHEST_BLOCK = register("diamond_shest", new ShestBlockDiamond(FabricBlockSettings.of(Material.METAL).sounds(BlockSoundGroup.METAL).strength(1.5F, 3.5F).build()), new Item.Settings().group(ItemGroupRegistry.SHEST_GROUP));
-	public static final Block EMERALD_SHEST_BLOCK = register("emerald_shest", new ShestBlockEmerald(FabricBlockSettings.of(Material.METAL).sounds(BlockSoundGroup.METAL).strength(1.5F, 3.5F).build()), new Item.Settings().group(ItemGroupRegistry.SHEST_GROUP));
+	public static final Block.Settings SHEST_BLOCK_SETTINGS = FabricBlockSettings.of(Material.METAL).sounds(BlockSoundGroup.METAL).strength(1.5F, 3.5F).build();
+
+	public static final Block DIRT_SHEST_BLOCK = register("dirt_shest", new ShestBlock(-1), SHEST_ITEM_SETTINGS);
+	public static final Block WOOD_SHEST_BLOCK = register("wood_shest", new ShestBlock(0), SHEST_ITEM_SETTINGS);
+	public static final Block IRON_SHEST_BLOCK = register("iron_shest", new ShestBlock(1), SHEST_ITEM_SETTINGS);
+	public static final Block GOLD_SHEST_BLOCK = register("gold_shest", new ShestBlock(2), SHEST_ITEM_SETTINGS);
+	public static final Block DIAMOND_SHEST_BLOCK = register("diamond_shest", new ShestBlock(3), SHEST_ITEM_SETTINGS);
+	public static final Block EMERALD_SHEST_BLOCK = register("emerald_shest", new ShestBlock(4), SHEST_ITEM_SETTINGS);
+	public static final Block NETHERITE_SHEST_BLOCK = register("netherite_shest", new ShestBlock(5), SHEST_ITEM_SETTINGS);
 
 	public BlockRegistry() {
 		// NO-OP

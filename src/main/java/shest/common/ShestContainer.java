@@ -1,42 +1,1 @@
-package shest.common;
-
-import net.minecraft.entity.ItemEntity;
-import net.minecraft.entity.ai.brain.task.PickUpItemTask;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.Inventory;
-import net.minecraft.inventory.InventoryListener;
-import net.minecraft.util.math.BlockPos;
-import shest.entity.ShestBlockEntity;
-import spinnery.common.BaseContainer;
-import spinnery.common.BaseInventory;
-import spinnery.widget.WAbstractWidget;
-import spinnery.widget.WInterface;
-import spinnery.widget.WSlot;
-
-public class ShestContainer extends BaseContainer {
-	public static final int SHEST_INVENTORY = 1;
-
-	ShestBlockEntity shestBlockEntity = null;
-
-	public ShestContainer(int synchronizationID, PlayerInventory playerInventory, BlockPos shestPos, int x, int y, int m) {
-		super(synchronizationID, playerInventory);
-
-		shestBlockEntity = ((ShestBlockEntity) getWorld().getBlockEntity(shestPos));
-
-		WInterface mainInterface = getInterface();
-
-		getInventories().put(SHEST_INVENTORY, shestBlockEntity);
-
-		shestBlockEntity.addListener(this::onContentChanged);
-
-		WSlot.addHeadlessArray(mainInterface, 0, SHEST_INVENTORY, x, y);
-		WSlot.addHeadlessPlayerInventory(mainInterface);
-
-		for (WAbstractWidget widget : mainInterface.getWidgets()) {
-			if (widget instanceof WSlot && ((WSlot) widget).getInventoryNumber() == SHEST_INVENTORY) {
-				((WSlot) widget).setOverrideMaximumCount(true);
-				((WSlot) widget).setMaximumCount(m);
-			}
-		}
-	}
-}
+package shest.common;import net.fabricmc.fabric.api.network.ServerSidePacketRegistry;import net.minecraft.entity.ItemEntity;import net.minecraft.entity.ai.brain.task.PickUpItemTask;import net.minecraft.entity.player.PlayerEntity;import net.minecraft.entity.player.PlayerInventory;import net.minecraft.inventory.Inventory;import net.minecraft.inventory.InventoryListener;import net.minecraft.item.ItemStack;import net.minecraft.server.network.ServerPlayerEntity;import net.minecraft.text.Text;import net.minecraft.util.math.BlockPos;import shest.entity.ShestBlockEntity;import spinnery.common.BaseContainer;import spinnery.common.BaseInventory;import spinnery.registry.NetworkRegistry;import spinnery.util.StackUtilities;import spinnery.widget.WAbstractWidget;import spinnery.widget.WInterface;import spinnery.widget.WSlot;import java.util.HashMap;import java.util.Optional;public class ShestContainer extends BaseContainer {	public static final int SHEST_INVENTORY = 1;	ShestBlockEntity shestBlockEntity;	public int x;	public int y;	public int m;	public Text name;	public PlayerEntity player;	public ShestContainer(int synchronizationID, Text name, PlayerInventory playerInventory, BlockPos pos, int x, int y, int m) {		super(synchronizationID, playerInventory);		this.name = name;		this.player = playerInventory.player;		this.x = x;		this.y = y;		this.m = m;		shestBlockEntity = ((ShestBlockEntity) getWorld().getBlockEntity(pos));		WInterface mainInterface = getInterface();		getInventories().put(SHEST_INVENTORY, shestBlockEntity);		shestBlockEntity.addListener(inventory -> sendContentUpdates());		WSlot.addHeadlessArray(mainInterface, 0, SHEST_INVENTORY, x, y);		WSlot.addHeadlessPlayerInventory(mainInterface);		for (WAbstractWidget widget : mainInterface.getWidgets()) {			if (widget instanceof WSlot && ((WSlot) widget).getInventoryNumber() == SHEST_INVENTORY) {				((WSlot) widget).setOverrideMaximumCount(true);				((WSlot) widget).setMaximumCount(m);			}		}	}}

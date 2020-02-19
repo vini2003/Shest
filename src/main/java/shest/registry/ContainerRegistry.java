@@ -9,6 +9,6 @@ public class ContainerRegistry {
 
 	public static void initialize() {
 		ContainerProviderRegistry.INSTANCE.registerFactory(SHEST_BLOCK_CONTAINER,
-				(syncId, id, player, buffer) -> new ShestContainer(syncId, player.inventory, buffer.readBlockPos(), buffer.readInt(), buffer.readInt(), buffer.readInt()));
+				(syncId, id, player, buffer) -> new ShestContainer(syncId, buffer.readText(), player.inventory, buffer.readBlockPos(), buffer.readInt(), buffer.readInt(), buffer.readInt()));
 	}
 }
