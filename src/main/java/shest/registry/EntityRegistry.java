@@ -14,7 +14,12 @@ public class EntityRegistry {
 	public static final BlockEntityType<ShestBlockEntity> ENTITY_SHEST = register(
 			"shest",
 			ShestBlockEntity::new,
-			BlockRegistry.WOOD_SHEST_BLOCK
+			BlockRegistry.DIRT_SHEST_BLOCK,
+			BlockRegistry.WOOD_SHEST_BLOCK,
+            BlockRegistry.IRON_SHEST_BLOCK,
+            BlockRegistry.GOLD_SHEST_BLOCK,
+            BlockRegistry.DIAMOND_SHEST_BLOCK,
+            BlockRegistry.EMERALD_SHEST_BLOCK
 	);
 
 	public static void initialize() {

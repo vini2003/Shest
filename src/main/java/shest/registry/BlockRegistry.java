@@ -24,7 +24,6 @@ public class BlockRegistry {
 	public static final Block GOLD_SHEST_BLOCK = register("gold_shest", new ShestBlock(2), SHEST_ITEM_SETTINGS);
 	public static final Block DIAMOND_SHEST_BLOCK = register("diamond_shest", new ShestBlock(3), SHEST_ITEM_SETTINGS);
 	public static final Block EMERALD_SHEST_BLOCK = register("emerald_shest", new ShestBlock(4), SHEST_ITEM_SETTINGS);
-	public static final Block NETHERITE_SHEST_BLOCK = register("netherite_shest", new ShestBlock(5), SHEST_ITEM_SETTINGS);
 
 	public BlockRegistry() {
 		// NO-OP

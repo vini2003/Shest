@@ -93,8 +93,6 @@ public class ShestBlock extends Block implements BlockEntityProvider {
 					return 15;
 				case 4:
 					return 18;
-				case 5:
-					return 21;
 				default:
 					return 0;
 			}
@@ -113,8 +111,6 @@ public class ShestBlock extends Block implements BlockEntityProvider {
 				case 3:
 					return 6;
 				case 4:
-					return 6;
-				case 5:
 					return 6;
 				default:
 					return 0;
