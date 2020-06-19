@@ -11,6 +11,7 @@ import net.minecraft.util.DefaultedList;
 import shest.block.ShestBlock;
 import shest.inventory.ShestInventory;
 import shest.registry.EntityRegistry;
+import spinnery.common.BaseInventory;
 import spinnery.util.InventoryUtilities;
 
 import java.util.ArrayList;
@@ -39,7 +40,15 @@ public class ShestBlockEntity extends BlockEntity implements BlockEntityClientSe
 		super.fromTag(tag);
 		this.tier = tag.getInt("tier");
 		initialize(tier);
-		InventoryUtilities.read(this, tag);
+		if (!tag.contains("inventory")) {
+			InventoryUtilities.readUnsafe(this, tag);
+		} else {
+			BaseInventory inventory = InventoryUtilities.read(tag);
+			this.stacks = DefaultedList.ofSize(inventory.getInvSize(), ItemStack.EMPTY);
+			for (int i = 0; i < inventory.getInvSize(); ++i) {
+				this.setInvStack(i, inventory.getInvStack(i));
+			}
+		}
 	}
 
 	@Override
@@ -55,7 +64,15 @@ public class ShestBlockEntity extends BlockEntity implements BlockEntityClientSe
 		super.fromTag(tag);
 		this.tier = tag.getInt("tier");
 		initialize(tier);
-		InventoryUtilities.read(this, tag);
+		if (!tag.contains("inventory")) {
+			InventoryUtilities.readUnsafe(this, tag);
+		} else {
+			BaseInventory inventory = InventoryUtilities.read(tag);
+			this.stacks = DefaultedList.ofSize(inventory.getInvSize(), ItemStack.EMPTY);
+			for (int i = 0; i < inventory.getInvSize(); ++i) {
+				this.setInvStack(i, inventory.getInvStack(i));
+			}
+		}
 	}
 
 	@Override
@@ -117,7 +134,7 @@ public class ShestBlockEntity extends BlockEntity implements BlockEntityClientSe
 
 	@Override
 	public void onInvChange(Inventory inventory) {
-		if (world != null && !world.isClient) {
+		if (world != null) {
 			listeners.forEach(inventoryListener -> inventoryListener.onInvChange(inventory));
 		}
 	}

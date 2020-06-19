@@ -5,6 +5,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.text.Text;
 import shest.common.ShestContainer;
 import spinnery.common.BaseContainerScreen;
+import spinnery.registry.NetworkRegistry;
 import spinnery.widget.WAbstractWidget;
 import spinnery.widget.WInterface;
 import spinnery.widget.WPanel;
@@ -24,7 +25,7 @@ public class ShestContainerScreen extends BaseContainerScreen<ShestContainer> {
 
 		WInterface mainInterface = getInterface();
 
-		WPanel mainPanel = mainInterface.createChild(WPanel.class, Position.of(0, 0, 0), x < 9 ? Size.of(9 * 18 + 8, y + 18 + 108) : Size.of(x * 18 + 8, y * 18 + 108)).setParent(mainInterface);
+		WPanel mainPanel = mainInterface.createChild(WPanel.class, Position.of(0, 0, 0), x < 9 ? Size.of(9 * 18 + 16, y + 18 + 108) : Size.of(x * 18 + 16, y * 18 + 108)).setParent(mainInterface);
 
 		mainPanel.setLabel(container.name);
 
@@ -37,7 +38,7 @@ public class ShestContainerScreen extends BaseContainerScreen<ShestContainer> {
 		WSlot.addPlayerInventory(Position.of(mainPanel, ((mainPanel.getWidth()) / 2) - (int) (18 * 4.5f), y * 18 + 24, 1), Size.of(18, 18), mainInterface);
 
 		if (x >= 9) {
-			WSlot.addArray(Position.of(mainPanel, 4, 19, 1), Size.of(18, 18), mainInterface, 0, SHEST_INVENTORY, x, y);
+			WSlot.addArray(Position.of(mainPanel, 8, 19, 1), Size.of(18, 18), mainInterface, 0, SHEST_INVENTORY, x, y);
 		} else {
 			mainInterface.add(mainInterface.createChild(WSlot.class, Position.of(mainPanel, mainPanel.getWidth() / 2 - 9, 19, 1), Size.of(18, 18)).setSlotNumber(0).setInventoryNumber(SHEST_INVENTORY));
 		}
