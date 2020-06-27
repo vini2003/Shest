@@ -16,10 +16,10 @@
 	"environment": "*",
 	"entrypoints": {
 		"main": [
-			"shest.Shest"
+			"com.github.vini2003.shest.Shest"
 		],
 		"client": [
-			"shest.ShestClient"
+			"com.github.vini2003.shest.ShestClient"
 		]
 	},
 	"mixins": [
