@@ -1,7 +1,7 @@
-package shest;
+package com.github.vini2003.shest;
 
 import net.fabricmc.api.ClientModInitializer;
-import shest.registry.ScreenRegistry;
+import com.github.vini2003.shest.registry.ScreenRegistry;
 
 public class ShestClient implements ClientModInitializer {
 	@Override

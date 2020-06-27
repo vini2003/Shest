@@ -1,11 +1,11 @@
-package shest.registry;
+package com.github.vini2003.shest.registry;
 
 import net.fabricmc.fabric.api.container.ContainerProviderRegistry;
 import net.minecraft.util.Identifier;
-import shest.common.ShestContainer;
+import com.github.vini2003.shest.common.ShestContainer;
 
 public class ContainerRegistry {
-	public static final Identifier SHEST_BLOCK_CONTAINER = new Identifier("shest", "shest");
+	public static final Identifier SHEST_BLOCK_CONTAINER = new Identifier("com.github.vini2003.shest", "com.github.vini2003.shest");
 
 	public static void initialize() {
 		ContainerProviderRegistry.INSTANCE.registerFactory(SHEST_BLOCK_CONTAINER,

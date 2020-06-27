@@ -1,4 +1,4 @@
-package shest.registry;
+package com.github.vini2003.shest.registry;
 
 import net.fabricmc.fabric.api.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
@@ -10,10 +10,10 @@ import net.minecraft.item.Item;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
-import shest.Shest;
-import shest.block.ShestBlock;
+import com.github.vini2003.shest.Shest;
+import com.github.vini2003.shest.block.ShestBlock;
 
-import static shest.registry.ItemRegistry.SHEST_ITEM_SETTINGS;
+import static com.github.vini2003.shest.registry.ItemRegistry.SHEST_ITEM_SETTINGS;
 
 public class BlockRegistry {
 	public static final Block.Settings SHEST_BLOCK_SETTINGS = FabricBlockSettings.of(Material.METAL).sounds(BlockSoundGroup.METAL).strength(1.5F, 3.5F).build();

@@ -1,4 +1,4 @@
-package shest.block;
+package com.github.vini2003.shest.block;
 
 import net.fabricmc.fabric.api.container.ContainerProviderRegistry;
 import net.minecraft.block.Block;
@@ -20,9 +20,9 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
-import shest.entity.ShestBlockEntity;
-import shest.registry.BlockRegistry;
-import shest.registry.ContainerRegistry;
+import com.github.vini2003.shest.entity.ShestBlockEntity;
+import com.github.vini2003.shest.registry.BlockRegistry;
+import com.github.vini2003.shest.registry.ContainerRegistry;
 
 public class ShestBlock extends Block implements BlockEntityProvider {
 	public ShestBlockEntity shestBlockEntity;

@@ -1,18 +1,18 @@
-package shest.registry;
+package com.github.vini2003.shest.registry;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
-import shest.Shest;
-import shest.entity.ShestBlockEntity;
+import com.github.vini2003.shest.Shest;
+import com.github.vini2003.shest.entity.ShestBlockEntity;
 
 import java.util.function.Supplier;
 
 public class EntityRegistry {
 	public static final BlockEntityType<ShestBlockEntity> ENTITY_SHEST = register(
-			"shest",
+			"com.github.vini2003.shest",
 			ShestBlockEntity::new,
 			BlockRegistry.DIRT_SHEST_BLOCK,
 			BlockRegistry.WOOD_SHEST_BLOCK,

@@ -1,9 +1,9 @@
-package shest.client;
+package com.github.vini2003.shest.client;
 
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.text.Text;
-import shest.common.ShestContainer;
+import com.github.vini2003.shest.common.ShestContainer;
 import spinnery.common.BaseContainerScreen;
 import spinnery.registry.NetworkRegistry;
 import spinnery.widget.WAbstractWidget;
@@ -13,7 +13,7 @@ import spinnery.widget.WSlot;
 import spinnery.widget.api.Position;
 import spinnery.widget.api.Size;
 
-import static shest.common.ShestContainer.SHEST_INVENTORY;
+import static com.github.vini2003.shest.common.ShestContainer.SHEST_INVENTORY;
 
 public class ShestContainerScreen extends BaseContainerScreen<ShestContainer> {
 	public ShestContainerScreen(ShestContainer container) {

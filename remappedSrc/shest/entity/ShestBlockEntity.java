@@ -1,4 +1,4 @@
-package shest.entity;
+package com.github.vini2003.shest.entity;
 
 import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
 import net.minecraft.block.entity.BlockEntity;
@@ -8,9 +8,9 @@ import net.minecraft.inventory.InventoryChangedListener;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.DefaultedList;
-import shest.block.ShestBlock;
-import shest.inventory.ShestInventory;
-import shest.registry.EntityRegistry;
+import com.github.vini2003.shest.block.ShestBlock;
+import com.github.vini2003.shest.inventory.ShestInventory;
+import com.github.vini2003.shest.registry.EntityRegistry;
 import spinnery.common.BaseInventory;
 import spinnery.util.InventoryUtilities;
 

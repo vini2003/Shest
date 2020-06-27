@@ -1,4 +1,4 @@
-package shest.inventory;
+package com.github.vini2003.shest.inventory;
 
 import net.minecraft.item.ItemStack;
 import spinnery.common.BaseInventory;

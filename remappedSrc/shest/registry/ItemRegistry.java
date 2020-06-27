@@ -1,9 +1,9 @@
-package shest.registry;
+package com.github.vini2003.shest.registry;
 
 import net.minecraft.item.Item;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
-import shest.Shest;
+import com.github.vini2003.shest.Shest;
 
 public class ItemRegistry {
 	public static final Item.Settings SHEST_ITEM_SETTINGS = new Item.Settings().group(ItemGroupRegistry.SHEST_GROUP);
